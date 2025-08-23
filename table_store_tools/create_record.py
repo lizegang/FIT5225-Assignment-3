@@ -9,11 +9,18 @@ def create_media_record(
     file_type,
     tags,
     user_id,
+    species=None,  
+    count=None,    
     thumbnail_url=None
 ):
     """
     Create new media metadata record
     Returns: True if successful, raises Exception if failed
+    New:
+
+    species: Bird species name (str, e.g., "crow")
+    count: Number of this species (int, e.g., 3)
+    
     """
     client = get_table_client()
 
@@ -26,7 +33,9 @@ def create_media_record(
         ('oss_url', oss_url),
         ('file_type', file_type),
         ('tags', tags),
-        ('user_id', user_id)
+        ('user_id', user_id),
+        ('species', species),  
+        ('count', count)     
     ]
     if thumbnail_url:
         attribute_columns.append(('thumbnail_url', thumbnail_url))
@@ -39,4 +48,5 @@ def create_media_record(
         return True
     except Exception as e:
         raise Exception(f"Failed to create record: {str(e)}. Check parameters!")
+
     
