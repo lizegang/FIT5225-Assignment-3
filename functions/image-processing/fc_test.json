@@ -1,0 +1,31 @@
+{
+  "events": [
+    {
+      "eventName": "ObjectCreated:PutObject",
+      "eventSource": "acs:oss",
+      "eventTime": "2025-08-27T15:30:00.000Z",
+      "eventVersion": "1.0",
+      "oss": {
+        "bucket": {
+          "arn": "acs:oss:oss-cn-hongkong-internal.aliyuncs.com:204598455829237204:fit5225-a3",
+          "name": "fit5225-a3",
+          "ownerIdentity": "204598455829237204"
+        },
+        "object": {
+          "key": "raw/crows_1.jpg",
+          "size": 102400,
+          "etag": "d41d8cd98f00b204e9800998ecf8427e",
+          "lastModified": "2025-08-27T15:29:00.000Z"
+        },
+        "endpoint": "cn-hongkong.aliyuncs.com",
+        "region": "cn-hongkong"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "192.168.1.100"
+      },
+      "responseElements": {
+        "requestId": "5F4A7C1A1234567890ABCDEF"
+      }
+    }
+  ]
+}
