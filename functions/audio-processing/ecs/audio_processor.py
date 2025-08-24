@@ -6,12 +6,7 @@ from datetime import datetime
 import oss2
 from tablestore import *
 import librosa
-import librosa.display
 import numpy as np
-from PIL import Image
-import matplotlib
-matplotlib.use('Agg')  # 设置无头后端
-import matplotlib.pyplot as plt
 import io
 import sys
 import json
@@ -40,7 +35,6 @@ class AudioProcessor:
         self.bucket_name = os.getenv('OSS_BUCKET_NAME')
         self.endpoint = os.getenv('OSS_ENDPOINT')
         self.audio_prefix = os.getenv('OSS_AUDIO_PREFIX', 'raw/')
-        self.thumbnail_prefix = os.getenv('OSS_THUMBNAIL_PREFIX', 'results/')
         
         # 表格存储配置 - 支持多种环境变量名称格式
         self.tablestore_endpoint = os.getenv('OTS_ENDPOINT') or os.getenv('TABLE_STORE_ENDPOINT')
@@ -90,25 +84,18 @@ class AudioProcessor:
             # 5. 使用BirdNET-Analyzer进行鸟类识别
             bird_detections = self.analyze_bird_audio(audio_path)
             
-            # 6. 生成频谱图
-            thumbnail_path = self.generate_spectrogram(y, sr, object_key)
-            
-            # 7. 上传缩略图到OSS
-            thumbnail_key = self.upload_thumbnail(thumbnail_path, object_key)
-            
-            # 8. 格式化鸟类标签
+            # 6. 格式化鸟类标签
             formatted_tags = self.format_bird_tags(bird_detections)
             
             # 9. 从object_key提取文件名
             filename = os.path.basename(object_key)
             
-            # 10. 保存元数据到表格存储
+            # 7. 保存元数据到表格存储
             file_metadata = {
                 'file_name': filename,
                 'file_path': object_key,
                 'duration': duration,
                 'sample_rate': sr,
-                'thumbnail_path': thumbnail_key,
                 'bird_detections': bird_detections,
                 'tags': formatted_tags,
                 'processed_time': datetime.now().isoformat(),
@@ -119,9 +106,8 @@ class AudioProcessor:
             
             record_id = self.save_metadata(file_metadata)
             
-            # 11. 清理临时文件
+            # 8. 清理临时文件
             os.unlink(audio_path)
-            os.unlink(thumbnail_path)
             
             processing_time = time.time() - start_time
             
@@ -131,7 +117,6 @@ class AudioProcessor:
                 'detections': bird_detections,
                 'tags': formatted_tags,
                 'oss_url': f"https://{self.bucket_name}.{self.endpoint.replace('https://', '')}/{object_key}",
-                'thumbnail_url': f"https://{self.bucket_name}.{self.endpoint.replace('https://', '')}/{thumbnail_key}",
                 'processed_time': file_metadata['processed_time'],
                 'processing_time': processing_time,
                 'record_id': record_id
@@ -307,61 +292,7 @@ class AudioProcessor:
             self.logger.error(f"Error formatting bird tags: {str(e)}")
             return []
      
-    def generate_spectrogram(self, y, sr, object_key):
-        """生成音频频谱图"""
-        try:
-            # 限制音频长度以避免超时（最多处理60秒）
-            max_duration = 60  # 秒
-            max_samples = int(max_duration * sr)
-            if len(y) > max_samples:
-                y = y[:max_samples]
-                self.logger.info(f"Audio truncated to {max_duration} seconds for spectrogram generation")
-            
-            # 生成梅尔频谱图（降低分辨率以提高速度）
-            mel_spec = librosa.feature.melspectrogram(
-                y=y, sr=sr, n_mels=64, hop_length=512, n_fft=1024
-            )
-            mel_spec_db = librosa.power_to_db(mel_spec, ref=np.max)
-             
-            # 创建图像（降低DPI以提高速度）
-            fig, ax = plt.subplots(figsize=(8, 3))
-            img = librosa.display.specshow(
-                mel_spec_db, sr=sr, x_axis='time', y_axis='mel', ax=ax
-            )
-            plt.colorbar(img, ax=ax, format='%+2.0f dB')
-            plt.title('Mel Spectrogram', fontsize=10)
-            plt.tight_layout()
-             
-            # 保存频谱图到临时文件
-            with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as temp_file:
-                plt.savefig(temp_file.name, dpi=100, bbox_inches='tight', 
-                           facecolor='white', edgecolor='none')
-                plt.close(fig)  # 明确关闭图形对象
-                plt.clf()  # 清理内存
-                return temp_file.name
-                 
-        except Exception as e:
-            self.logger.error(f"Error generating spectrogram: {str(e)}")
-            # 确保清理matplotlib资源
-            plt.close('all')
-            plt.clf()
-            raise
-     
-    def upload_thumbnail(self, thumbnail_path, object_key):
-        """上传缩略图到OSS"""
-        try:
-            # 生成缩略图的OSS key
-            base_name = os.path.splitext(os.path.basename(object_key))[0]
-            thumbnail_key = f"{self.thumbnail_prefix}{base_name}_spectrogram.png"
-             
-            # 上传到OSS
-            self.bucket.put_object_from_file(thumbnail_key, thumbnail_path)
-             
-            return thumbnail_key
-             
-        except Exception as e:
-            self.logger.error(f"Error uploading thumbnail: {str(e)}")
-            raise
+
      
     def save_metadata(self, metadata):
         """保存元数据到表格存储"""
@@ -388,7 +319,6 @@ class AudioProcessor:
                 ('file_type', 'audio'),
                 ('tags', tags_json),  # 保存鸟类识别结果
                 ('user_id', 'audio_processor'),
-                ('thumbnail_url', f"oss://{self.bucket_name}/{metadata['thumbnail_path']}"),
                 # 额外的音频特定字段
                 ('duration', metadata['duration']),
                 ('sample_rate', metadata['sample_rate']),
