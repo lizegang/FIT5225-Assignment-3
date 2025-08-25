@@ -52,10 +52,10 @@ if __name__ == "__main__":
     print(result)
     body = {
         "table_name": "bird_media_meta",
-        "file_id": "img_5f95dee5b3",
-        "timestamp": 1756094505,
-        "oss_url": "oss://fit5225-a3/raw/crows_1.jpg",
-        "thumbnail_url": "oss://fit5225-a3/thumbnails/crows_1_thumb.jpg",
+        "file_id": "img_46a6dfcef2",
+        "timestamp": 1756114084,
+        "oss_url": "oss://fit5225-a3/raw/sparrow_2.jpg",
+        "thumbnail_url": "oss://fit5225-a3/thumbnails/sparrow_2_thumb.jpg",
     }
     url_delete = "http://www.fit5032-a3.online/delete"
     appcode_delete = "e2e0791324e5409693308a4b7aedf1f4"
