@@ -1,0 +1,25 @@
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji"; margin: 0; background: #0b1220; color: #e6edf3; }
+header { padding: 16px; border-bottom: 1px solid #24324a; position: sticky; top: 0; background: #0b1220; z-index: 10; }
+h1 { margin: 0 0 12px; font-size: 20px; }
+.env { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 12px; align-items: end; }
+.env label { display: grid; gap: 6px; font-size: 12px; color: #9fb1c7; }
+.env input { padding: 8px 10px; border: 1px solid #24324a; border-radius: 8px; background: #0f182a; color: #e6edf3; }
+.env button { padding: 10px 12px; border: 1px solid #335bff; background: #335bff; color: white; border-radius: 8px; cursor: pointer; }
+.env button.secondary { border-color: #2b3a56; background: transparent; color: #c7d4e7; }
+
+main { padding: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.card { background: #0f182a; border: 1px solid #24324a; border-radius: 12px; padding: 16px; }
+.card h2 { margin-top: 0; font-size: 16px; }
+.row { display: grid; gap: 8px; margin: 8px 0; }
+.row.two { grid-template-columns: 1fr 1fr; gap: 8px 12px; }
+.row input { padding: 8px 10px; border: 1px solid #24324a; border-radius: 8px; background: #0b1220; color: #e6edf3; }
+.row button { padding: 10px 12px; border: 1px solid #335bff; background: #335bff; color: white; border-radius: 8px; cursor: pointer; }
+
+.result { white-space: pre-wrap; background: #0b1220; padding: 12px; border-radius: 8px; border: 1px solid #24324a; min-height: 48px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 12px; }
+.item { background: #0b1220; border: 1px solid #24324a; border-radius: 10px; padding: 8px; }
+.item h4 { margin: 0 0 6px; font-size: 14px; }
+.item a { color: #6aa7ff; word-break: break-all; }
+.item .thumb { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; background: #09101e; border: 1px solid #1d2940; }
+.item .meta { font-size: 12px; color: #9fb1c7; margin-top: 4px; }

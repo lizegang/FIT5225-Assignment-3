@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BirdTag Web UI</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>BirdTag 控制台</h1>
+    <div class="env">
+      <label>
+        API 网关域名
+        <input id="baseUrl" placeholder="http://www.fit5032-a3.online" />
+      </label>
+      <label>
+        AppCode（查询）
+        <input id="appcodeQuery" placeholder="648e7efb47e747d1be2de5039150c834" />
+      </label>
+      <label>
+        AppCode（解析/analysis）
+        <input id="appcodeAnalysis" placeholder="38f6729313934179b7eb6a46476bd431" />
+      </label>
+      <label>
+        AppCode（删除）
+        <input id="appcodeDelete" placeholder="e2e0791324e5409693308a4b7aedf1f4" />
+      </label>
+      <label>
+        AppCode（上传）
+        <input id="appcodeUpload" placeholder="填你们为 /upload 分配的 AppCode" />
+      </label>
+      <button id="saveEnv">保存配置</button>
+      <button id="resetEnv" class="secondary">重置默认</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card" id="uploadCard">
+      <h2>文件上传</h2>
+      <input type="file" id="fileInput" />
+      <label style="display:flex;align-items:center;gap:8px;margin:8px 0;">
+        <input type="checkbox" id="compress" checked /> 压缩大图（避免请求体过大导致 400）
+      </label>
+      <div id="uploadInfo" class="meta"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button id="btnUpload">上传到 OSS</button>
+        <button id="btnUploadTest" class="secondary">测试上传（小文本）</button>
+      </div>
+      <pre id="uploadResult" class="result"></pre>
+    </section>
+
+    <section class="card" id="queryCard">
+      <h2>多条件查询</h2>
+      <div class="row">
+        <label>species（可多种，逗号分隔）</label>
+        <input id="species" placeholder="sparrow,crow" />
+      </div>
+      <div class="row">
+        <label>species_not（可多种，逗号分隔）</label>
+        <input id="speciesNot" placeholder="nightingale" />
+      </div>
+      <div class="row two">
+        <label>count_min</label>
+        <input id="countMin" type="number" value="1" />
+        <label>count_max</label>
+        <input id="countMax" type="number" value="3" />
+      </div>
+      <div class="row">
+        <label>minimum_should_match</label>
+        <input id="msm" type="number" value="1" min="0" max="1" />
+      </div>
+      <div class="row">
+        <button id="btnAnalysis">先解析(analysis)</button>
+        <button id="btnQuery">直接查询(query)</button>
+      </div>
+      <pre id="queryResult" class="result"></pre>
+      <div id="grid" class="grid"></div>
+    </section>
+
+    <section class="card" id="deleteCard">
+      <h2>删除文件与记录</h2>
+      <p>从查询结果点击一项可自动填充；或手动填写：</p>
+      <div class="row">
+        <label>table_name</label>
+        <input id="tableName" value="bird_media_meta" />
+      </div>
+      <div class="row two">
+        <label>file_id</label>
+        <input id="fileId" />
+        <label>timestamp</label>
+        <input id="timestamp" />
+      </div>
+      <div class="row">
+        <label>oss_url</label>
+        <input id="ossUrl" />
+      </div>
+      <div class="row">
+        <label>thumbnail_url</label>
+        <input id="thumbUrl" />
+      </div>
+      <button id="btnDelete">删除</button>
+      <pre id="deleteResult" class="result"></pre>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
