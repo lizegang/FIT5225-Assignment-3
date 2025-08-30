@@ -7,6 +7,7 @@ import time
 import json
 
 from oss2 import Bucket, Auth
+from table_store_tools.table_store_client import get_table_client
 from table_store_tools.create_record import create_media_record
 
 
@@ -112,8 +113,7 @@ def handler(event, context):
 
         with open(thumbnail_temp_path, "wb") as f:
             f.write(thumbnail_bytes)
-        print(
-            f"Thumbnail written to local: {thumbnail_temp_path}, Size: {os.path.getsize(thumbnail_temp_path)} bytes")
+        print(f"Thumbnail written to local: {thumbnail_temp_path}, Size: {os.path.getsize(thumbnail_temp_path)} bytes")
 
         oss_bucket.put_object_from_file(thumbnail_key, thumbnail_temp_path)
         thumbnail_oss_url = f"oss://{oss_bucket.bucket_name}/{thumbnail_key}"
@@ -129,7 +129,13 @@ def handler(event, context):
         user_id = "user3"
         tags_str = json.dumps(tags)
         print(f"转换后的tags字符串: {tags_str}")
-
+        if isinstance(tags, dict) and "species" in tags and "count" in tags:
+            species = tags["species"]
+            count = tags["count"]
+        elif isinstance(tags, dict) and len(tags) > 0:
+            species, count = next(iter(tags.items()))
+        else:
+            species, count = "unknown", 0
         try:
             table_result = create_media_record(
                 table_name=table_name,
@@ -139,7 +145,9 @@ def handler(event, context):
                 file_type=file_type,
                 tags=tags_str,
                 user_id=user_id,
-                thumbnail_url=thumbnail_oss_url
+                thumbnail_url=thumbnail_oss_url,
+                species=species,
+                count=count
             )
             print(f"Table Store write done, Result: {table_result}")
         except Exception as e:
