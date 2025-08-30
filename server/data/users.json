@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "002",
+      "username": "alice",
+      "account": "alice@example.com",
+      "password": "password123",
+      "icon": "/static/images/Default_Avatar.svg"
+    },
+    {
+      "id": "003",
+      "username": "Corey",
+      "account": "test@sample.com",
+      "password": "Lcw123456",
+      "icon": "/static/images/Default_Avatar.svg"
+    },
+    {
+      "id": "004",
+      "username": "Corey",
+      "account": "scentedtea210@gmail.com",
+      "password": "Lcw123456",
+      "icon": "/static/images/Default_Avatar.svg"
+    }
+  ]
+}

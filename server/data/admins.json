@@ -1,0 +1,11 @@
+{
+  "admins": [
+    {
+      "id": "001",
+      "username": "corey",
+      "account": "cliu0177@student.monash.edu",
+      "password": "123456",
+      "icon":"/static/images/Default_Avatar.svg"
+    }
+  ]
+}

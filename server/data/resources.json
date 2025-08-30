@@ -1,0 +1,94 @@
+{
+  "resources": [
+    {
+      "id": 1,
+      "type": "news",
+      "title": "Welcome to Our Website",
+      "date": "2025-07-20",
+      "abstract": "Our mental health website launched today—come chat openly and find like-minded people.",
+      "content": "Welcome to our website!\n\nThis is a safe space created just for you—a place to share your feelings, whether you're happy or feeling down.\n\nWe hope you find resonance here, and may you also bring warmth to others",
+      "image": "/static/images/news_id_001.jpg",
+      "Topic": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "Content": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "Usefulness": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 2,
+      "type": "article",
+      "title": "Understanding Anxiety: A Common Mental Health Challenge",
+      "date": "2025-07-21",
+      "abstract": "Anxiety affects millions—learn what it is, why it happens, and how you can manage it effectively.",
+      "content": "Anxiety is a natural emotional response to stress or perceived threats, but when it becomes overwhelming or persistent, it may indicate an anxiety disorder.\n\nCommon symptoms include restlessness, rapid heartbeat, and difficulty concentrating. It's important to know that anxiety is treatable, and you're not alone.\n\nSeeking support from professionals, practicing mindfulness, and talking to trusted people can make a real difference.",
+      "image": "/static/images/article_id_001.jpg",
+      "Topic": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Content": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "Usefulness": [
+        3,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": 3,
+      "type": "quiz",
+      "title": "Mental Wellbeing Self-Assessment Quiz",
+      "date": "2025-07-22",
+      "abstract": "Take this short quiz to reflect on your current mental wellbeing and get some personalized tips based on your score.",
+      "content": "This short quiz is designed to help you gain insights into your recent mental and emotional state. Answer the following five questions honestly. Each answer has a point value from 0 to 3.\n\nQuestions:\n1. Do you often feel tired or lack motivation?\n   A. Never (0 pts)  B. Occasionally (1 pt)  C. Often (2 pts)  D. Always (3 pts)\n\n2. Do you find it hard to enjoy things you used to like?\n   A. Never (0 pts)  B. Occasionally (1 pt)  C. Often (2 pts)  D. Always (3 pts)\n\n3. Have you felt anxious or nervous lately?\n   A. Never (0 pts)  B. Occasionally (1 pt)  C. Often (2 pts)  D. Always (3 pts)\n\n4. Are you having trouble concentrating or staying focused?\n   A. Never (0 pts)  B. Occasionally (1 pt)  C. Often (2 pts)  D. Always (3 pts)\n\n5. Have you experienced poor sleep or insomnia?\n   A. Never (0 pts)  B. Occasionally (1 pt)  C. Often (2 pts)  D. Always (3 pts)\n\nScoring:\n0–4: You're doing well mentally—keep up the good habits.\n5–8: Minor fluctuations—take some time to rest and reflect.\n9–12: Take care—your stress might be building up.\n13–15: High alert—consider speaking to a mental health professional.\n\nThis quiz is not a diagnosis. If you're feeling overwhelmed, seeking professional support is always a good step.",
+      "image": "/static/images/quiz_id_001.jpg",
+      "Topic": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "Content": [
+        0,
+        0,
+        1,
+        1,
+        0
+      ],
+      "Usefulness": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ]
+    }
+  ]
+}
